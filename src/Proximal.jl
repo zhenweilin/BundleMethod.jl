@@ -258,16 +258,17 @@ function update_bundles!(method::ProximalMethod)
 end
 
 function purge_bundles!(method::ProximalMethod)
+    ## for limit the number of cuts
     bundle = get_model(method)
     model = get_model(bundle)
     ncuts_removed = 0
     ncols = JuMP.num_variables(model)
     ncuts = length(method.cuts)
-    for (ref, cut) in method.cuts
-        if ncuts - ncuts_removed <= ncols
-            break
-        end
-        if cut["age"] >= method.params.max_age
+    sorted_cuts = sort(collect(method.cuts), by = x -> x.second["age"])
+    counter = 0
+    for (ref, cut) in sorted_cuts
+        counter += 1
+        if cut["age"] >= method.params.max_age || counter > method.params.max_cut_num
             JuMP.delete(model, ref)
             delete!(method.cuts, ref)
             ncuts_removed += 1

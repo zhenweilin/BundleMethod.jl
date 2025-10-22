@@ -1,6 +1,6 @@
 Base.@kwdef mutable struct Parameters
     print_output::Bool = true #print output
-    maxiter::Int = 3000     # maximum number of iterations
+    maxiter::Int = 20000     # maximum number of iterations
     ncuts_per_iter::Int = 1 # number of cuts added per iteration
     obj_limit::Float64 = -Inf # termination condition
     time_limit::Float64 = 3600.0
@@ -14,7 +14,7 @@ Base.@kwdef mutable struct Parameters
     ϵ_float::Float64 = 1.e-8 # tolerance for floating point comparison
     m_R::Float64 = 0.5       # proximal term update parameter (0.5, 1)
     max_age::Int = 10        # maximum number of iterations before removing inactive cuts
-
+    max_cut_num::Int = 50 # maximum number of cuts
     # Trust region method
     Δ_ub::Float64 = 1.e+3 # trust region bound upper limit
     Δ_lb::Float64 = 1.e-4 # trust region bound lower limit

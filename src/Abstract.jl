@@ -49,6 +49,7 @@ function add_constraints!(method::AbstractMethod) end
 
 # This implements the algorithmic steps.
 function run!(method::AbstractMethod)
+    println("====== Running Zhenwei customized Proximal Bundle Method that supports limited number of cuts ======")
     add_initial_bundles!(method)
     update_iteration!(method)
     solve_bundle_model!(method)
